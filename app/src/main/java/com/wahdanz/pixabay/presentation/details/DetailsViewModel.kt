@@ -18,7 +18,7 @@ class DetailsViewModel(
     override val coroutineContext: CoroutineContext
         get() = executionThread.mainScheduler + job
 
-    fun getAllPixbays(id:Int) {
+    fun getAllPixbays(id: Int) {
         if (state.value == PixbayDetailsState.Loading)
             return
         launch(coroutineContext) {

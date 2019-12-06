@@ -23,11 +23,10 @@ class DetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_details)
         if (intent.extras == null || (!intent.hasExtra(ITEM_ID)))
             finish()
-        viewModel.getAllPixbays(intent.getIntExtra(ITEM_ID,0))
+        viewModel.getAllPixbays(intent.getIntExtra(ITEM_ID, 0))
         viewModel.state.observe(this, Observer {
             handelState(it)
         })
-
     }
 
     private fun handelState(it: PixbayDetailsState) {
@@ -46,7 +45,6 @@ class DetailsActivity : AppCompatActivity() {
                 progressBar.visibility = View.GONE
             }
         }
-
     }
 
     private fun handelData(data: PixbayEntity) {
@@ -58,15 +56,13 @@ class DetailsActivity : AppCompatActivity() {
             getString(R.string.favorites_title).bold with data.favorites.toString().redColor
         number_likes.coloredText =
             getString(R.string.likes_title).bold with data.likes.toString().redColor
-        list_tags.coloredText = data.tags.joinToString (",".greenColor).redColor
-
-
+        list_tags.coloredText = data.tags.joinToString(",".greenColor).redColor
     }
 
     companion object {
 
         private const val ITEM_ID = "item_id"
-        fun startActivity(context: Context?, id: Int) : Intent {
+        fun startActivity(context: Context?, id: Int): Intent {
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra(ITEM_ID, id)
             return intent

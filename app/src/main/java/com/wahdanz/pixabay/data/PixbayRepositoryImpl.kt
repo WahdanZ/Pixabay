@@ -14,7 +14,7 @@ class PixbayRepositoryImpl(private val cache: PixbayCache, private val remote: P
         // todo to be improved and make it Database first
         return catchNonNetworkException(networkCall = {
           val res = remote.getAllPixbays(page, query)
-            cache.saveAllPixbays(query,res)
+            cache.saveAllPixbays(query, res)
             res.map(mapper::mapToEntity)
         }) {
             cache.getAllPixbays(query).map(mapper::mapToEntity)

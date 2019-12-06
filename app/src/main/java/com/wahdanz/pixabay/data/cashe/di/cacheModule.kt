@@ -8,7 +8,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val cacheModule = module(override = true) {
-    single<PixbayCache> { PixbayCacheImpl(get(),get()) }
+    single<PixbayCache> { PixbayCacheImpl(get(), get()) }
     factory { PixabayCacheMapper() }
     single { PixabayDatabase.getInstance(context = androidContext()) }
 }

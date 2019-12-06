@@ -59,7 +59,6 @@ private const val htmlColor = "<font color=\"%s\">%s</font> "
      */
 fun String.coloredWithCode(code: String): String {
     return htmlColor.format(code, this)
-
 }
         /**
          * colored text with yellow color
@@ -199,7 +198,7 @@ fun String.coloredWithCode(code: String): String {
             return "<sup>$this</sup>"
         }
 
-    val String.link:String
+val String.link: String
         get() {
             return "<a href=$this>$this</a>"
         }

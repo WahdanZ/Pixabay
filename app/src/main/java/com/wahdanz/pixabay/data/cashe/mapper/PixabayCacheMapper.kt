@@ -1,17 +1,14 @@
 package com.wahdanz.pixabay.data.cashe.mapper
 
 import com.wahdanz.pixabay.core.cache.mapper.CacheMapper
-import com.wahdanz.pixabay.core.data.mapper.DataMapper
 import com.wahdanz.pixabay.data.cashe.dto.PixabayCache
 import com.wahdanz.pixabay.data.model.PixabayModel
-import com.wahdanz.pixabay.data.store.PixbayCache
-import com.wahdanz.pixabay.domain.entity.PixbayEntity
 
 class PixabayCacheMapper :
     CacheMapper<PixabayCache, PixabayModel> {
 
     override fun mapFromCached(type: PixabayCache?): PixabayModel {
-      return  PixabayModel(
+        return PixabayModel(
             id = type?.id ?: 0,
             thumbnail = type?.thumbnail ?: "",
             largeImageURL = type?.largeImageURL ?: "",

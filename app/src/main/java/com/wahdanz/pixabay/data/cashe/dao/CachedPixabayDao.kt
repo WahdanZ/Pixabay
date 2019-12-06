@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.wahdanz.pixabay.data.cashe.dto.PixabayCache
-import com.wahdanz.pixabay.data.model.PixabayModel
 
 @Dao
 interface CachedPixabayDao {

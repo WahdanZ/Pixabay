@@ -38,4 +38,4 @@ data class PixabayCache(
     val likes: Int = 0,
 
     val query: String = ""
-):CacheModel
+) : CacheModel

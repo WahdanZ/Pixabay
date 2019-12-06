@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             handelState(it)
         })
         search_button.setOnClickListener {
-            viewModel.getAllPixbays(editText.text.toString(),0)
+            viewModel.getAllPixbays(editText.text.toString(), 0)
         }
     }
 
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        val layoutManager = GridLayoutManager(this,2)
+        val layoutManager = GridLayoutManager(this, 2)
         homeAdapter = HomeAdapter(
             itemList = listOf(),
             layoutResIds = arrayOf(R.layout.home_item),
@@ -57,9 +57,8 @@ class MainActivity : AppCompatActivity() {
                 item_image.load(item.thumbnailImage)
                 user_text.coloredText =
                     context.getString(R.string.user_title).bold with item.user.redColor
-                list_tags.coloredText = item.tags.joinToString (",".greenColor).redColor
-
-            },itemClick={
+                list_tags.coloredText = item.tags.joinToString(",".greenColor).redColor
+            }, itemClick = {
                 showDilaog(this)
             }
         )
@@ -82,7 +81,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             negativeButton {
-
             }
         }
     }
