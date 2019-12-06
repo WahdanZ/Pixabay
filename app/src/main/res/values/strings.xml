@@ -4,4 +4,10 @@
     <string name="timeout_error_message">Connection timeout</string>
     <string name="unknown_error">Unknown error</string>
     <string name="refresh">Refresh</string>
+    <string name="dialog_title">Greet</string>
+    <string name="dialog_show_details">Do you want to see more details?</string>
+    <string name="user_title">User:</string>
+    <string name="comments_title">Comments:</string>
+    <string name="favorites_title">Favorites:</string>
+    <string name="likes_title">Likes:</string>
 </resources>

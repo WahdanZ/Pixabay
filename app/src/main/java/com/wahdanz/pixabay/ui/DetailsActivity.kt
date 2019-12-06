@@ -2,10 +2,10 @@ package com.wahdanz.pixabay.ui
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.wahdanz.pixabay.R
 import com.wahdanz.pixabay.domain.entity.PixbayEntity
@@ -51,10 +51,13 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun handelData(data: PixbayEntity) {
         imageView.load(data.largeImageUrl)
-        user_text.coloredText = "User:".bold with data.user.redColor
-        number_comments.coloredText = "Comments:".bold with data.comments.toString().redColor
-        number_favorites.coloredText = "Favorites:".bold with data.favorites.toString().redColor
-        number_likes.coloredText = "Likes:".bold with data.likes.toString().redColor
+        user_text.coloredText = getString(R.string.user_title).bold with data.user.redColor
+        number_comments.coloredText =
+            getString(R.string.comments_title).bold with data.comments.toString().redColor
+        number_favorites.coloredText =
+            getString(R.string.favorites_title).bold with data.favorites.toString().redColor
+        number_likes.coloredText =
+            getString(R.string.likes_title).bold with data.likes.toString().redColor
         list_tags.coloredText = data.tags.joinToString (",".greenColor).redColor
 
 

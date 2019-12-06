@@ -1,14 +1,13 @@
 package com.wahdanz.pixabay.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.GridLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.wahdanz.pixabay.R
+import com.wahdanz.pixabay.domain.entity.PixbayEntity
 import com.wahdanz.pixabay.extensions.*
 import com.wahdanz.pixabay.presentation.home.HomeViewModel
 import com.wahdanz.pixabay.presentation.home.PixbayHomeState
@@ -56,15 +55,35 @@ class MainActivity : AppCompatActivity() {
             layoutResIds = arrayOf(R.layout.home_item),
             bindHolder = { item ->
                 item_image.load(item.thumbnailImage)
-                user_text.coloredText = "User:".bold with item.user.redColor
+                user_text.coloredText =
+                    context.getString(R.string.user_title).bold with item.user.redColor
                 list_tags.coloredText = item.tags.joinToString (",".greenColor).redColor
 
             },itemClick={
-               startActivity( DetailsActivity.startActivity(context = applicationContext,id =  this.id))
+                showDilaog(this)
             }
         )
 
         recyclerView_Dogs.adapter = homeAdapter
         recyclerView_Dogs.layoutManager = layoutManager
+    }
+
+    private fun showDilaog(pixbayEntity: PixbayEntity) {
+        showAlertDialog {
+            setTitle(getString(R.string.dialog_title))
+            setMessage(getString(R.string.dialog_show_details))
+            positiveButton("Yes") {
+                startActivity(
+                    DetailsActivity.startActivity(
+                        context = applicationContext,
+                        id = pixbayEntity.id
+                    )
+                )
+            }
+
+            negativeButton {
+
+            }
+        }
     }
 }
