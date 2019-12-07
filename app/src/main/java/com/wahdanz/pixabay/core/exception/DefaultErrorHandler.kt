@@ -12,11 +12,12 @@ internal class DefaultErrorHandler constructor(private val resourceManager: AppR
     override fun getErrorMessage(error: Throwable): String {
 
         return when (error) {
-            is IOException, is UnknownHostException, is SocketException
-            -> resourceManager.getString(R.string.no_internet_connection)
             is SocketTimeoutException -> {
                 resourceManager.getString(R.string.timeout_error_message)
             }
+            is IOException, is UnknownHostException, is SocketException
+            -> resourceManager.getString(R.string.no_internet_connection)
+
             is NetworkException -> {
                 error.error ?: resourceManager.getString(R.string.unknown_error)
             }

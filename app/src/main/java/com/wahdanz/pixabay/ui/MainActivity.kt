@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             handelState(it)
         })
         search_button.setOnClickListener {
-            viewModel.getAllPixbays(editText.text.toString(), 0)
+            viewModel.getAllPixbays(search_edit_text.text.toString(), 0)
         }
     }
 
@@ -36,6 +36,12 @@ class MainActivity : AppCompatActivity() {
         when (it) {
             is PixbayHomeState.PixbayData -> {
                 homeAdapter.addAndReplaceAll(it.data)
+                search_edit_text.setText(it.query)
+                progressBar.visibility = View.GONE
+            }
+            is PixbayHomeState.PixbayLoadMoreData -> {
+                homeAdapter.addAll(it.data)
+                search_edit_text.setText(it.query)
                 progressBar.visibility = View.GONE
             }
             is PixbayHomeState.Loading -> {
@@ -63,8 +69,11 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        recyclerView_Dogs.adapter = homeAdapter
-        recyclerView_Dogs.layoutManager = layoutManager
+        recyclerView_pixbay.adapter = homeAdapter
+        recyclerView_pixbay.layoutManager = layoutManager
+        recyclerView_pixbay.loadMore(layoutManager, loadMore = {
+            viewModel.loadMore(it)
+        })
     }
 
     private fun showDilaog(pixbayEntity: PixbayEntity) {

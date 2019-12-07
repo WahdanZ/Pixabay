@@ -6,6 +6,7 @@ import com.wahdanz.pixabay.data.store.PixbayCache
 import com.wahdanz.pixabay.data.store.PixbayRemote
 import com.wahdanz.pixabay.domain.entity.PixbayEntity
 import com.wahdanz.pixabay.domain.repository.PixbayRepository
+import com.wahdanz.pixabay.extensions.errorLog
 
 class PixbayRepositoryImpl(private val cache: PixbayCache, private val remote: PixbayRemote, private val mapper: PixabayDataMapper) :
     PixbayRepository {
@@ -16,8 +17,12 @@ class PixbayRepositoryImpl(private val cache: PixbayCache, private val remote: P
           val res = remote.getAllPixbays(page, query)
             cache.saveAllPixbays(query, res)
             res.map(mapper::mapToEntity)
-        }) {
-            cache.getAllPixbays(query).map(mapper::mapToEntity)
+        }) { exception ->
+            errorLog("getAllPixbays query:$query ,page: $page ", exception)
+            val res = cache.getAllPixbays(query).map(mapper::mapToEntity)
+            if (res.isEmpty() || page != 1)
+                throw exception
+            res
         }
     }
 

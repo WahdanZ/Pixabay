@@ -28,7 +28,6 @@ class PixbayRepositoryImplTest {
     @Test
     fun `test get data from remote`() {
         runBlocking {
-
             whenever(remote.getAllPixbays(page = 1, query = "fruits")).thenReturn(listOf())
             pixbayRepository.getAllPixbays(page = 1, query = "fruits")
             verify(remote, Mockito.times(1)).getAllPixbays(page = 1, query = "fruits")
@@ -39,7 +38,23 @@ class PixbayRepositoryImplTest {
     fun `test get data from cache when no internet connection`() {
         runBlocking {
             whenever(remote.getAllPixbays(page = 1, query = "fruits")).thenAnswer { throw SocketTimeoutException() }
-            whenever(remote.getAllPixbays(page = 1, query = "fruits")).thenReturn(listOf())
+            whenever(cache.getAllPixbays(query = "fruits")).thenReturn(listOf(DummyData.dummyDataObject))
+            pixbayRepository.getAllPixbays(page = 1, query = "fruits")
+            verify(remote, Mockito.times(1)).getAllPixbays(page = 1, query = "fruits")
+            verify(cache, Mockito.times(1)).getAllPixbays(query = "fruits")
+        }
+    }
+
+    @Test(expected = SocketTimeoutException::class)
+    fun `test rethrow the exception when no internet connection and no data on cache`() {
+        runBlocking {
+            whenever(
+                remote.getAllPixbays(
+                    page = 1,
+                    query = "fruits"
+                )
+            ).thenAnswer { throw SocketTimeoutException() }
+            whenever(cache.getAllPixbays(query = "fruits")).thenReturn(listOf())
             pixbayRepository.getAllPixbays(page = 1, query = "fruits")
             verify(remote, Mockito.times(1)).getAllPixbays(page = 1, query = "fruits")
             verify(cache, Mockito.times(1)).getAllPixbays(query = "fruits")

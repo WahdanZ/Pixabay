@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.wahdanz.pixabay.core.exception.ErrorHandler
 import com.wahdanz.pixabay.core.executor.ExecutionThread
 import com.wahdanz.pixabay.domain.interactors.GetPixbayUseCase
+import com.wahdanz.pixabay.extensions.debugLog
+import com.wahdanz.pixabay.extensions.errorLog
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -18,7 +20,7 @@ class DetailsViewModel(
     override val coroutineContext: CoroutineContext
         get() = executionThread.mainScheduler + job
 
-    fun getAllPixbays(id: Int) {
+    fun getPixbay(id: Int) {
         if (state.value == PixbayDetailsState.Loading)
             return
         launch(coroutineContext) {
@@ -28,11 +30,14 @@ class DetailsViewModel(
             val result = withContext(executionThread.ioScheduler) {
                 getPixbayUseCase.execute(GetPixbayUseCase.Params(id = id))
             }
+             debugLog("getPixbay $result")
              state.value =
                  PixbayDetailsState.PixbayData(
                      result
                  )
          } catch (e: Exception) {
+             errorLog("getPixbay id:$id ", e)
+
              state.value =
                  PixbayDetailsState.Error(
                      errorHandler.getErrorMessage(e)

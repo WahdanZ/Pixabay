@@ -11,14 +11,12 @@ class MockedErrorHandler : ErrorHandler {
     override fun getErrorMessage(error: Throwable): String {
 
         return when (error) {
+            is SocketTimeoutException -> "Connection timeout"
             is IOException, is UnknownHostException, is SocketException
             -> "No internet connection"
-            is SocketTimeoutException -> {
-                "Connection timeout"
-            }
-            is NetworkException -> {
-                error.error ?: "Unknown error"
-            }
+
+            is NetworkException -> error.error ?: "Unknown error"
+
             else -> "Unknown error"
         }
     }

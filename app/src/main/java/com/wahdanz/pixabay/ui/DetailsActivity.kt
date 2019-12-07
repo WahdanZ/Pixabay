@@ -23,7 +23,7 @@ class DetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_details)
         if (intent.extras == null || (!intent.hasExtra(ITEM_ID)))
             finish()
-        viewModel.getAllPixbays(intent.getIntExtra(ITEM_ID, 0))
+        viewModel.getPixbay(intent.getIntExtra(ITEM_ID, 0))
         viewModel.state.observe(this, Observer {
             handelState(it)
         })

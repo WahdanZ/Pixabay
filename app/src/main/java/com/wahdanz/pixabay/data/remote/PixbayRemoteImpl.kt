@@ -13,8 +13,15 @@ class PixbayRemoteImpl(
     private val remoteMapper: PixabayRemoteMapper
 ) : BaseRemoteRepo(moshi), PixbayRemote {
 
-    override suspend fun getAllPixbays(page: Int, name: String): List<PixabayModel> {
-     return execute(pixbayApiInterface.getImages(q = name, page = page, key = Constants.key, per_page = Constants.per_page))
+    override suspend fun getAllPixbays(page: Int, query: String): List<PixabayModel> {
+        return execute(
+            pixbayApiInterface.getImages(
+                q = query,
+                page = page,
+                key = Constants.key,
+                per_page = Constants.per_page
+            )
+        )
          .data
          ?.hits
          ?.map(remoteMapper::mapFromRemote) ?: listOf()

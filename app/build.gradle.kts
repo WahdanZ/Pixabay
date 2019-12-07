@@ -19,6 +19,9 @@ android {
         versionName = Config.Application.appVersionName
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
     buildTypes {
         getByName("debug") {
 
